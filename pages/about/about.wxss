@@ -1,0 +1,4 @@
+.about-page { padding: 32rpx; }
+.section { margin-bottom: 48rpx; }
+.section-title { font-size: 32rpx; font-weight: bold; color: #333; margin-bottom: 16rpx; }
+.section-body { font-size: 28rpx; color: #666; line-height: 1.8; }

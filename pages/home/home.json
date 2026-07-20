@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "AI 角色",
+  "usingComponents": {
+    "t-search": "tdesign-miniprogram/search/search",
+    "t-swiper": "tdesign-miniprogram/swiper/swiper",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item",
+    "t-image": "tdesign-miniprogram/image/image",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-loading": "tdesign-miniprogram/loading/loading",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "persona-card": "../../components/persona-card/persona-card",
+    "empty-state": "../../components/empty-state/empty-state",
+    "disclaimer-banner": "../../components/disclaimer-banner/disclaimer-banner"
+  }
+}

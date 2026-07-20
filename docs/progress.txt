@@ -1,0 +1,24 @@
+实现完成 — 微信小程序前端（U1–U10 全部交付）
+
+项目结构：
+
+utils/ — storage.js（持久化封装）、request.js（REST 层 + 401 拦截）、auth.js（统一鉴权：requireAuth守卫、handleSessionExpired处理器、主动续期）、socket.js（WebSocket 单例：状态机、指数退避重连、心跳探活）、chat-cache.js（按人格内存缓存）
+services/ — user-api.js、character-api.js、session-api.js
+pages/ — login（chooseAvatar+nickname表单）、home（搜索+轮播+人格卡片）、me（会话列表+删除+昵称编辑）、about/privacy/terms（合规页面）
+subpackages/chat/ — 聊天页（TDesign chat组件族、思考中指示器、发送防抖、30s超时失败、历史下拉加载）
+components/ — persona-card、empty-state、disclaimer-banner
+关键设计落地：
+
+WebSocket 生命周期绑定聊天页 onLoad/onUnload，防止跨人格串号
+401（REST）和 WS 鉴权失败归口到同一个 handleSessionExpired 处理器，防止竞态
+登出时清空 token、聊天缓存、所有持久化 session_id（防止账号 A 数据残留给账号 B）
+人格卡片防双击导航（_navigating 标志位）
+仍需上线前确认的 deferred items（见计划 Open Questions）：
+
+session_id 由前端还是后端分配（影响 U6 逻辑）
+聊天历史消息拉取接口（GET /api/session/messages，目前为假设路径）
+WebSocket 回复 code 字段的取值语义（0=成功，1=过滤 — 需与后端确认）
+主动续期的 POST /api/user/login 是否接受仅 code（不带头像昵称）
+免责声明"关闭"的记忆范围（产品/合规决策）
+隐私政策、用户协议正式文案（法务审核）
+图标资源（assets/icons/）需自行添加

@@ -1,0 +1,9 @@
+<view class="disclaimer-banner" wx:if="{{visible}}">
+  <view class="banner-content">
+    <text class="banner-icon">⚠️</text>
+    <text class="banner-text">{{text || '以下内容由AI生成，人格均为虚构角色，仅为趣味模拟，与真实人物无关'}}</text>
+  </view>
+  <view class="banner-close" bindtap="onClose" wx:if="{{closable}}">
+    <text class="close-icon">×</text>
+  </view>
+</view>

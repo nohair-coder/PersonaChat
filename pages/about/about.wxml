@@ -1,0 +1,26 @@
+<view class="about-page">
+  <view class="section">
+    <view class="section-title">关于人格聊天</view>
+    <view class="section-body">
+      <text>人格聊天是一款基于AI技术的趣味对话应用，提供与虚构AI人格互动的娱乐体验。</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">免责声明</view>
+    <view class="section-body">
+      <text>1. 本应用中所有人格角色均为虚构，使用二次元或化名等非真实身份，与任何真实人物无关。\n\n</text>
+      <text>2. 所有AI生成内容仅供娱乐参考，不代表任何真实人物的观点、立场或言论。\n\n</text>
+      <text>3. 本应用不构成专业建议（包括但不限于医疗、法律、财务建议），请勿据此做出重要决定。\n\n</text>
+      <text>4. AI回复内容经过内容安全过滤，但仍可能存在不准确或不适当的内容，请用户自行甄别。\n\n</text>
+      <text>5. 本应用保留在不另行通知的情况下修改、暂停或终止服务的权利。</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">联系我们</view>
+    <view class="section-body">
+      <text>如有问题或建议，请通过微信小程序反馈功能联系我们。</text>
+    </view>
+  </view>
+</view>

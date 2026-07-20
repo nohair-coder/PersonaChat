@@ -1,0 +1,32 @@
+<view class="persona-card" bindtap="onTap">
+  <!-- Avatar -->
+  <view class="avatar-wrap">
+    <t-image
+      class="avatar"
+      src="{{persona.avatarUrl}}"
+      mode="aspectFill"
+      lazy-load
+      error-icon="/assets/icons/avatar-placeholder.png"
+    />
+    <view wx:if="{{persona.featured}}" class="featured-badge">精选</view>
+  </view>
+
+  <!-- Info -->
+  <view class="info">
+    <text class="name">{{persona.name}}</text>
+    <text class="desc">{{persona.description}}</text>
+
+    <!-- Tags -->
+    <view wx:if="{{persona.tags && persona.tags.length > 0}}" class="tags">
+      <block wx:for="{{persona.tags}}" wx:key="*this">
+        <t-tag
+          wx:if="{{index < 3}}"
+          class="tag"
+          theme="primary"
+          variant="light"
+          size="small"
+        >{{item}}</t-tag>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,107 @@
+<view class="me-page">
+  <!-- Guest state -->
+  <view class="guest-state" wx:if="{{!isLoggedIn}}">
+    <image class="guest-icon" src="/assets/icons/default-avatar.png" mode="aspectFill" />
+    <text class="guest-tip">登录后查看历史对话和个人设置</text>
+    <t-button theme="primary" size="large" bindtap="onLogin" class="guest-login-btn">立即登录</t-button>
+  </view>
+
+  <!-- Logged in state -->
+  <block wx:else>
+    <!-- User info section -->
+    <view class="user-card">
+      <t-avatar
+        image="{{userInfo.avatarUrl}}"
+        size="large"
+        shape="circle"
+      />
+      <view class="user-info">
+        <view class="nickname-row" wx:if="{{!editingNickname}}">
+          <text class="nickname">{{userInfo.nickname || '用户'}}</text>
+          <text class="edit-btn" bindtap="onStartEditNickname">编辑</text>
+        </view>
+        <view class="nickname-edit-row" wx:else>
+          <t-input
+            class="nickname-input"
+            value="{{nicknameInput}}"
+            bindinput="onNicknameInputChange"
+            placeholder="请输入昵称"
+            maxlength="20"
+            confirm-type="done"
+            bindconfirm="onSaveNickname"
+          />
+          <view class="edit-actions">
+            <text class="cancel-btn" bindtap="onCancelEditNickname">取消</text>
+            <text class="save-btn" bindtap="onSaveNickname">保存</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Session history section -->
+    <view class="section-title">历史对话</view>
+
+    <view class="sessions-loading" wx:if="{{loadingSessions}}">
+      <t-loading theme="circular" size="48rpx" />
+    </view>
+
+    <empty-state
+      wx:elif="{{!loadingSessions && sessions.length === 0}}"
+      icon="/assets/icons/empty-chat.png"
+      text="还没有对话记录"
+      actionText="去发现人格"
+      bindaction="onGoHome"
+    />
+
+    <view class="sessions-list" wx:elif="{{!loadingSessions}}">
+      <t-cell-group>
+        <block wx:for="{{sessions}}" wx:key="session_id">
+          <t-cell
+            title="{{item.persona_name || '未知人格'}}"
+            note="{{item.last_message || '暂无消息'}}"
+            arrow
+            bindtap="onSessionTap"
+            data-session="{{item}}"
+            hover-class="cell-hover"
+          >
+            <t-avatar
+              slot="left-icon"
+              image="{{item.persona_avatar}}"
+              size="medium"
+              shape="circle"
+            />
+            <view slot="right-icon" class="session-meta">
+              <text class="session-time">{{item.updated_at_str}}</text>
+              <text class="delete-btn" catchtap="onDeleteSession" data-id="{{item.session_id}}">删除</text>
+            </view>
+          </t-cell>
+        </block>
+      </t-cell-group>
+    </view>
+
+    <!-- Settings section -->
+    <view class="section-title">设置</view>
+    <t-cell-group>
+      <t-cell title="关于我们 & 免责声明" arrow bindtap="onAbout" />
+      <t-cell title="隐私政策" arrow bindtap="onPrivacy" />
+      <t-cell title="用户协议" arrow bindtap="onTerms" />
+    </t-cell-group>
+
+    <t-button class="logout-btn" theme="default" size="large" bindtap="onLogout">退出登录</t-button>
+  </block>
+
+  <!-- Delete confirmation dialog -->
+  <t-dialog
+    id="delete-dialog"
+    visible="{{showDeleteDialog}}"
+    title="删除对话"
+    content="确认删除这段对话历史？此操作无法撤销。"
+    confirm-btn="{{deleteConfirmBtn}}"
+    cancel-btn="{{deleteCancelBtn}}"
+    bindconfirm="onConfirmDelete"
+    bindcancel="onCancelDelete"
+    bindclose="onCancelDelete"
+  />
+
+  <t-toast id="t-toast" />
+</view>

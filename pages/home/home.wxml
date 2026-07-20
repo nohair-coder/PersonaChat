@@ -1,0 +1,81 @@
+<page>
+  <disclaimer-banner />
+  <t-toast id="t-toast" />
+
+  <!-- Search bar -->
+  <view class="search-wrap">
+    <t-search
+      value="{{searchKeyword}}"
+      placeholder="搜索角色名称或描述"
+      bind:change="onSearchChange"
+      bind:clear="onSearchClear"
+    />
+  </view>
+
+  <!-- Loading state -->
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <t-loading theme="circular" size="40px" text="加载中..." />
+  </view>
+
+  <!-- Error state -->
+  <view wx:elif="{{loadError}}" class="error-wrap">
+    <image class="error-icon" src="/assets/icons/error.png" mode="aspectFit" />
+    <text class="error-text">加载失败，请重试</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <!-- Content -->
+  <block wx:elif="{{!loading && !loadError}}">
+    <!-- Featured carousel (only shown when no search keyword) -->
+    <block wx:if="{{!searchKeyword && featuredPersonas.length > 0}}">
+      <view class="section-title">精选角色</view>
+      <t-swiper
+        class="featured-swiper"
+        autoplay
+        duration="{{500}}"
+        interval="{{4000}}"
+        navigation="{{true}}"
+        current="{{swiperCurrent}}"
+        bind:change="onSwiperChange"
+      >
+        <block wx:for="{{featuredPersonas}}" wx:key="id">
+          <view class="swiper-item" data-id="{{item.id}}" bindtap="onPersonaTap">
+            <t-image
+              class="swiper-img"
+              src="{{item.avatarUrl}}"
+              mode="aspectFill"
+              lazy-load
+            />
+            <view class="swiper-overlay">
+              <text class="swiper-name">{{item.name}}</text>
+              <text class="swiper-desc">{{item.description}}</text>
+            </view>
+          </view>
+        </block>
+      </t-swiper>
+    </block>
+
+    <!-- Section title for full list -->
+    <view wx:if="{{!searchKeyword}}" class="section-title section-title--list">全部角色</view>
+    <view wx:else class="section-title section-title--list">搜索结果</view>
+
+    <!-- No results empty state -->
+    <empty-state
+      wx:if="{{filteredPersonas.length === 0}}"
+      icon="/assets/icons/empty.png"
+      text="{{searchKeyword ? '没有找到相关角色' : '暂无角色'}}"
+      actionText="{{searchKeyword ? '清除搜索' : ''}}"
+      bind:action="onSearchClear"
+    />
+
+    <!-- Persona grid -->
+    <view wx:else class="persona-grid">
+      <block wx:for="{{filteredPersonas}}" wx:key="id">
+        <persona-card
+          persona="{{item}}"
+          bind:tap="onPersonaCardTap"
+        />
+      </block>
+    </view>
+  </block>
+</page>

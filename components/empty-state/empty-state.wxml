@@ -1,0 +1,14 @@
+<view class="empty-state">
+  <image
+    wx:if="{{icon}}"
+    class="empty-icon"
+    src="{{icon}}"
+    mode="aspectFit"
+  />
+  <text class="empty-text">{{text}}</text>
+  <button
+    wx:if="{{actionText}}"
+    class="empty-action"
+    bindtap="onActionTap"
+  >{{actionText}}</button>
+</view>
