@@ -1,0 +1,9 @@
+<view class="policy-page">
+  <view class="section">
+    <view class="section-title">用户协议</view>
+    <view class="section-body">
+      <text>【请在此处填写完整的用户协议文本，上线前需经法务/合规团队审核确认】\n\n</text>
+      <text>使用本应用即表示您同意遵守本协议的全部条款。</text>
+    </view>
+  </view>
+</view>

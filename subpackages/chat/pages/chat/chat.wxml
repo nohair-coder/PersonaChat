@@ -1,0 +1,126 @@
+<view class="chat-page">
+  <!-- Connection status bar -->
+  <view class="status-bar status-bar--{{socketState}}" wx:if="{{socketState !== 'open'}}">
+    <t-loading wx:if="{{socketState === 'connecting' || socketState === 'reconnecting'}}" theme="circular" size="24rpx" />
+    <t-icon wx:elif="{{socketState === 'closed'}}" name="wifi-error" size="24rpx" />
+    <text class="status-text">
+      {{socketState === 'connecting' ? '连接中...' : socketState === 'reconnecting' ? '重新连接中...' : '连接断开'}}
+    </text>
+    <text class="status-retry" wx:if="{{socketState === 'closed'}}" bindtap="onManualReconnect">点击重试</text>
+  </view>
+
+  <!-- Persona offline banner -->
+  <view class="offline-banner" wx:if="{{personaOffline}}">
+    <text class="offline-text">该人格已下架，无法继续对话</text>
+    <text class="offline-back" bindtap="onBack">返回首页</text>
+  </view>
+
+  <!-- Loading state -->
+  <view class="chat-loading" wx:if="{{loading && !personaOffline}}">
+    <t-loading theme="circular" size="60rpx" />
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- Chat content -->
+  <view class="chat-content" wx:if="{{!loading && !personaOffline}}">
+    <!-- Disclaimer banner slot -->
+    <view class="disclaimer-bar">
+      <text class="disclaimer-text">仅为AI趣味模拟，非真实人物</text>
+    </view>
+
+    <!-- History loading indicator -->
+    <view class="history-loading" wx:if="{{loadingHistory}}">
+      <t-loading theme="circular" size="32rpx" />
+      <text class="history-loading-text">加载历史消息...</text>
+    </view>
+    <view class="history-end" wx:elif="{{historyEnd && messages.length > 0}}">
+      <text class="history-end-text">—— 没有更多历史消息 ——</text>
+    </view>
+
+    <!-- Message list -->
+    <scroll-view
+      class="message-list"
+      scroll-y
+      scroll-top="{{scrollTop}}"
+      scroll-into-view="{{scrollIntoView}}"
+      bindscrolltoupper="onScrollToUpper"
+      enable-flex
+      id="messageList"
+    >
+      <view class="message-list-inner">
+        <block wx:for="{{messages}}" wx:key="id">
+          <view class="message-item" id="msg-{{item.id}}">
+            <!-- Persona (AI) message -->
+            <view class="msg-row msg-row--left" wx:if="{{item.role === 'assistant'}}">
+              <image class="msg-avatar" src="{{personaInfo.avatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill" />
+              <view class="msg-bubble msg-bubble--ai">
+                <view class="msg-persona-name">{{personaInfo.name}}</view>
+                <text class="msg-text" selectable>{{item.content}}</text>
+                <view class="msg-time">{{item.timeStr}}</view>
+              </view>
+            </view>
+
+            <!-- Thinking indicator -->
+            <view class="msg-row msg-row--left" wx:elif="{{item.role === 'thinking'}}">
+              <image class="msg-avatar" src="{{personaInfo.avatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill" />
+              <view class="msg-bubble msg-bubble--ai msg-bubble--thinking">
+                <view class="thinking-dots">
+                  <view class="dot dot1" />
+                  <view class="dot dot2" />
+                  <view class="dot dot3" />
+                </view>
+              </view>
+            </view>
+
+            <!-- System/filter message -->
+            <view class="msg-row msg-row--center" wx:elif="{{item.role === 'system'}}">
+              <view class="msg-system">
+                <text class="msg-system-text">{{item.content}}</text>
+              </view>
+            </view>
+
+            <!-- User message -->
+            <view class="msg-row msg-row--right" wx:elif="{{item.role === 'user'}}">
+              <view class="msg-bubble msg-bubble--user">
+                <text class="msg-text" selectable>{{item.content}}</text>
+                <view class="msg-meta">
+                  <text class="msg-time">{{item.timeStr}}</text>
+                  <text class="msg-status msg-status--fail" wx:if="{{item.status === 'failed'}}" bindtap="onRetryMessage" data-id="{{item.id}}">发送失败，点击重试</text>
+                </view>
+              </view>
+              <image class="msg-avatar" src="{{userAvatarUrl || '/assets/icons/default-avatar.png'}}" mode="aspectFill" />
+            </view>
+          </view>
+        </block>
+        <!-- Anchor element for auto-scroll-to-bottom -->
+        <view id="chat-bottom" style="height: 1px;" />
+      </view>
+    </scroll-view>
+
+    <!-- Input sender -->
+    <view class="sender-area">
+      <view class="sender-disabled-tip" wx:if="{{socketState === 'closed'}}">
+        <text>连接断开，消息暂时无法发送</text>
+      </view>
+      <view class="sender-wrapper" wx:else>
+        <view class="sender-input">
+          <input
+            class="text-input"
+            placeholder="和{{personaInfo.name || 'TA'}}说点什么..."
+            value="{{inputText}}"
+            bindinput="onInput"
+            bindconfirm="onSend"
+            confirm-type="send"
+            maxlength="500"
+            disabled="{{sending || socketState !== 'open'}}"
+          />
+          <view class="send-btn {{inputText ? 'send-btn--active' : ''}}" bindtap="onSend">
+            <t-icon name="send" size="40rpx" color="{{inputText ? '#0052d9' : '#cccccc'}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

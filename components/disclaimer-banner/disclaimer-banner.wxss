@@ -1,0 +1,43 @@
+.disclaimer-banner {
+  display: flex;
+  align-items: center;
+  background: #fffbe6;
+  border-bottom: 1rpx solid #ffe58f;
+  padding: 16rpx 24rpx;
+  gap: 12rpx;
+}
+
+.banner-content {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.banner-icon {
+  font-size: 26rpx;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.banner-text {
+  font-size: 22rpx;
+  color: #875300;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.banner-close {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.close-icon {
+  font-size: 32rpx;
+  color: #ad6800;
+  line-height: 1;
+}

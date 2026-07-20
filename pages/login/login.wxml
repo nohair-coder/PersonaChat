@@ -1,0 +1,64 @@
+<view class="login-page">
+  <view class="login-hero">
+    <image class="login-logo" src="/assets/icons/logo.png" mode="aspectFit" />
+    <text class="login-title">人格聊天</text>
+    <text class="login-subtitle">与你喜爱的AI人格畅聊</text>
+  </view>
+
+  <view class="login-form" wx:if="{{!loading}}">
+    <!-- 头像昵称填写能力（替代已失效的 wx.getUserProfile） -->
+    <form bindsubmit="onFormSubmit">
+      <view class="avatar-row">
+        <button
+          class="avatar-btn"
+          open-type="chooseAvatar"
+          bindchooseavatar="onChooseAvatar"
+        >
+          <image
+            class="avatar-img"
+            src="{{avatarUrl || '/assets/icons/default-avatar.png'}}"
+            mode="aspectFill"
+          />
+          <text class="avatar-hint">{{avatarUrl ? '更换头像' : '点击选择头像'}}</text>
+        </button>
+      </view>
+
+      <view class="nickname-row">
+        <input
+          class="nickname-input"
+          type="nickname"
+          name="nickname"
+          placeholder="请输入昵称"
+          value="{{nickname}}"
+          bindinput="onNicknameInput"
+          maxlength="20"
+        />
+      </view>
+
+      <button
+        class="submit-btn"
+        form-type="submit"
+        loading="{{submitting}}"
+        disabled="{{submitting || !avatarUrl || !nickname}}"
+      >
+        微信授权登录
+      </button>
+    </form>
+
+    <view class="guest-row">
+      <text class="guest-btn" bindtap="onGuestLogin">暂不登录，先逛逛</text>
+    </view>
+
+    <view class="auth-hint" wx:if="{{authError}}">
+      <text class="auth-hint-text">需要完成头像和昵称填写才能使用</text>
+      <text class="auth-hint-retry" bindtap="onRetryAuth">重新授权</text>
+    </view>
+  </view>
+
+  <view class="login-loading" wx:if="{{loading}}">
+    <t-loading theme="circular" size="40rpx" />
+    <text class="loading-text">登录中...</text>
+  </view>
+
+  <t-toast id="t-toast" />
+</view>

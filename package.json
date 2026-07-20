@@ -1,0 +1,8 @@
+{
+  "name": "PersonaChat",
+  "version": "1.0.0",
+  "description": "网红人格AI对话微信小程序",
+  "dependencies": {
+    "tdesign-miniprogram": "1.7.0"
+  }
+}

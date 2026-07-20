@@ -1,0 +1,150 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+  padding: 0 48rpx;
+}
+
+.login-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120rpx;
+  padding-bottom: 64rpx;
+}
+
+.login-logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.login-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.login-subtitle {
+  font-size: 28rpx;
+  color: #999999;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-row {
+  margin-bottom: 32rpx;
+}
+
+.avatar-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.avatar-btn::after {
+  border: none;
+}
+
+.avatar-img {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 64rpx;
+  border: 2rpx solid #e5e5e5;
+  margin-bottom: 12rpx;
+}
+
+.avatar-hint {
+  font-size: 24rpx;
+  color: #0052d9;
+}
+
+.nickname-row {
+  width: 100%;
+  margin-bottom: 32rpx;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 88rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  background-color: #0052d9;
+  color: #ffffff;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  border: none;
+  margin-bottom: 24rpx;
+}
+
+.submit-btn[disabled] {
+  background-color: #c0cfe8;
+}
+
+.guest-row {
+  margin-top: 8rpx;
+}
+
+.guest-btn {
+  font-size: 28rpx;
+  color: #999999;
+  text-decoration: underline;
+}
+
+.auth-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  background: #fff7e6;
+  border-radius: 12rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-hint-text {
+  font-size: 26rpx;
+  color: #ff8c00;
+  margin-bottom: 12rpx;
+}
+
+.auth-hint-retry {
+  font-size: 26rpx;
+  color: #0052d9;
+}
+
+.login-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #999999;
+  margin-top: 24rpx;
+}

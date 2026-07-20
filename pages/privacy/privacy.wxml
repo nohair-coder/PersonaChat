@@ -1,0 +1,10 @@
+<view class="policy-page">
+  <view class="section">
+    <view class="section-title">隐私政策</view>
+    <view class="section-body">
+      <text>【请在此处填写完整的隐私政策文本，上线前需经法务/合规团队审核确认】\n\n</text>
+      <text>本政策说明我们如何收集、使用和保护您的个人信息，包括微信昵称、头像及对话内容。\n\n</text>
+      <text>我们严格遵守《个人信息保护法》（PIPL）及相关法律法规的要求。</text>
+    </view>
+  </view>
+</view>
